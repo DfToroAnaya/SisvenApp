@@ -11,7 +11,8 @@ class CategoriaController extends Controller
      */
     public function index()
     {
-        //
+        $categorias = Categorias::all();
+        return view('categorias.index', ['categorias' => $categorias]);
     }
 
     /**
@@ -19,7 +20,7 @@ class CategoriaController extends Controller
      */
     public function create()
     {
-        //
+        return view('categorias.new');
     }
 
     /**
@@ -27,7 +28,17 @@ class CategoriaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name'=> 'required|string|max:64|unique:categorias,name',
+            'descripcion' => 'nullable|string',
+        ]);
+
+        Categorias::create([
+            'name' => $request->name,
+            'descripcion' => $request->descripcion,
+        ]);
+
+        return redirect()-> route('categorias.index');
     }
 
     /**
@@ -43,7 +54,9 @@ class CategoriaController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $categorias = Categorias::find($id);
+
+        return view('categorias.edit', compact('categorias'));
     }
 
     /**
@@ -51,7 +64,18 @@ class CategoriaController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'name' => 'required|max:255',
+        'descripcion' => 'required|max:255',
+        ]);
+
+        $categorias =Categorias::find($id);
+
+        $categorias->name = $request->input('name');
+        $categorias->descripcion = $request->input('descripcion');
+        $categorias->save();
+
+        return redirect()->route('categorias.index');
     }
 
     /**
@@ -59,6 +83,10 @@ class CategoriaController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $categorias = Categorias::find($id);
+
+        $categorias->delete();
+
+        return redirect()->route('categorias.index');
     }
 }
