@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use  App\Models\Categorias;
 
 class CategoriaController extends Controller
 {
@@ -29,13 +30,13 @@ class CategoriaController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name'=> 'required|string|max:64|unique:categorias,name',
-            'descripcion' => 'nullable|string',
+            'name'=> 'required|string|max:64|unique:categories,name',
+            'description' => 'nullable|string',
         ]);
 
         Categorias::create([
             'name' => $request->name,
-            'descripcion' => $request->descripcion,
+            'description' => $request->description,
         ]);
 
         return redirect()-> route('categorias.index');
@@ -66,13 +67,13 @@ class CategoriaController extends Controller
     {
         $request->validate([
             'name' => 'required|max:255',
-        'descripcion' => 'required|max:255',
+        'description' => 'required|max:255',
         ]);
 
         $categorias =Categorias::find($id);
 
         $categorias->name = $request->input('name');
-        $categorias->descripcion = $request->input('descripcion');
+        $categorias->description = $request->input('description');
         $categorias->save();
 
         return redirect()->route('categorias.index');

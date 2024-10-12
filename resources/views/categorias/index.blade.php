@@ -1,7 +1,7 @@
 <x-app-layout>
   
     <h2 class="font-semibold text-x5 text-gray-800 dark:text-gray-200 leading-tight">
-        {{ __('Categories') }}
+        {{ __('Categorias') }}
     </h2>
 
 
@@ -46,7 +46,7 @@
                 <tr>
                   <th scope="row">{{$categoria->id}}</th>
                   <td>{{$categoria->name}}</td>
-                  <td>{{$categoria->descripcion}}</td>
+                  <td>{{$categoria->description}}</td>
                   <td>
                     <a href="{{route('categorias.edit',['categorias'=>$categoria->id])}}"
                       class="btn btn-info"> Edit</a></li>
